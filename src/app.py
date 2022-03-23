@@ -18,14 +18,25 @@ conexion = MySQL(app)
 def listar_cursos():
     try:
         cursor = conexion.connection.cursor()
-        sql = "SELECT codigo, nombre, creditos FROM curso ORDER BY nombre ASC"
+        sql = "SELECT * FROM bom"
         cursor.execute(sql)
         datos = cursor.fetchall()
         cursos = []
         for fila in datos:
-            curso = {'codigo': fila[0], 'nombre': fila[1], 'creditos': fila[2]}
+            curso = {
+                    'Network Layer': fila[0],
+                    'Vendor': fila[1],
+                    'Template': fila[2],
+                    'Vendor Part': fila[3],
+                    'Item Master': fila[4],
+                    'SAP Number': fila[5],
+                    'Description': fila[6],
+                    'Comment': fila[7],
+                    'Count': fila[8],
+                    'Price': fila[9]
+                    }
             cursos.append(curso)
-        return jsonify({'cursos': cursos, 'mensaje': "Cursos listados.", 'exito': True})
+        return jsonify({'BOM': cursos, 'mensaje': "Cursos listados.", 'exito': True})
     except Exception as ex:
         return jsonify({'mensaje': "Error", 'exito': False})
 
@@ -33,12 +44,26 @@ def listar_cursos():
 def leer_curso_bd(codigo):
     try:
         cursor = conexion.connection.cursor()
-        sql = "SELECT codigo, nombre, creditos FROM curso WHERE codigo = '{0}'".format(codigo)
+        sql = "SELECT * FROM curso WHERE 'template' = '{0}'".format(codigo)
         cursor.execute(sql)
-        datos = cursor.fetchone()
+        datos = cursor.fetchall()
+        cursos = []
         if datos != None:
-            curso = {'codigo': datos[0], 'nombre': datos[1], 'creditos': datos[2]}
-            return curso
+            for fila in datos:
+                curso = {
+                        'Network Layer': fila[0],
+                        'Vendor': fila[1],
+                        'Template': fila[2],
+                        'Vendor Part': fila[3],
+                        'Item Master': fila[4],
+                        'SAP Number': fila[5],
+                        'Description': fila[6],
+                        'Comment': fila[7],
+                        'Count': fila[8],
+                        'Price': fila[9]
+                        }
+                cursos.append(curso)
+            return jsonify({'BOM': cursos, 'mensaje': "Cursos listados.", 'exito': True})
         else:
             return None
     except Exception as ex:
