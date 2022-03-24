@@ -14,7 +14,7 @@ conexion = MySQL(app)
 
 
 # @cross_origin
-@app.route('/cursos', methods=['GET'])
+@app.route('/bom', methods=['GET'])
 def listar_cursos():
     try:
         cursor = conexion.connection.cursor()
@@ -76,7 +76,7 @@ def leer_curso_bd(template):
         raise ex
 
 
-@app.route('/cursos/<template>', methods=['GET'])
+@app.route('/bom/<template>', methods=['GET'])
 def leer_curso(template):
     #print(template)
     try:

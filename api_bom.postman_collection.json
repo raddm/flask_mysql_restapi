@@ -1,0 +1,68 @@
+{
+    "_": {
+        "postman_id": "18047d1e-8669-4700-a033-8d97b7a5b4c9"
+    },
+    "item": [
+        {
+            "id": "c7c483f6-34ee-4bac-b823-8a0f59e84021",
+            "name": "GET listar_BOM",
+            "request": {
+                "url": {
+                    "protocol": "http",
+                    "port": "5000",
+                    "path": [
+                        "cursos"
+                    ],
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "query": [],
+                    "variable": []
+                },
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "*/*"
+                    }
+                ],
+                "method": "GET"
+            },
+            "response": [],
+            "event": []
+        },
+        {
+            "id": "1ec5754d-5098-4fa7-b419-ffb36b4e24e4",
+            "name": "GET listar_un_template",
+            "request": {
+                "url": {
+                    "protocol": "http",
+                    "port": "5000",
+                    "path": [
+                        "cursos"
+                    ],
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "query": [],
+                    "variable": []
+                },
+                "method": "GET"
+            },
+            "response": [],
+            "event": []
+        }
+    ],
+    "event": [],
+    "variable": [],
+    "info": {
+        "_postman_id": "18047d1e-8669-4700-a033-8d97b7a5b4c9",
+        "name": "api_bom",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+}
