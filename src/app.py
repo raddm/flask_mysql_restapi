@@ -18,22 +18,23 @@ conexion = MySQL(app)
 def listar_cursos():
     try:
         cursor = conexion.connection.cursor()
-        sql = "SELECT * FROM bom"
+        sql = "SELECT id, network_layer, vendor, template, vendor_part, item_master, sap_number, description, comment, count, price FROM bom order by id asc"
         cursor.execute(sql)
         datos = cursor.fetchall()
         cursos = []
         for fila in datos:
             curso = {
-                    'Network Layer': fila[0],
-                    'Vendor': fila[1],
-                    'Template': fila[2],
-                    'Vendor Part': fila[3],
-                    'Item Master': fila[4],
-                    'SAP Number': fila[5],
-                    'Description': fila[6],
-                    'Comment': fila[7],
-                    'Count': fila[8],
-                    'Price': fila[9]
+                    'id': fila[0],
+                    'network_layer': fila[1],
+                    'vendor': fila[2],
+                    'template': fila[3],
+                    'vendor_part': fila[4],
+                    'item_master': fila[5],
+                    'sap_number': fila[6],
+                    'description': fila[7],
+                    'comment': fila[8],
+                    'count': fila[9],
+                    'price': fila[10]
                     }
             cursos.append(curso)
         return jsonify({'BOM': cursos, 'mensaje': "Cursos listados.", 'exito': True})
@@ -41,41 +42,72 @@ def listar_cursos():
         return jsonify({'mensaje': "Error", 'exito': False})
 
 
-def leer_curso_bd(codigo):
+def leer_curso_bd(template):
+    print('def: {0}'.format(template))
     try:
         cursor = conexion.connection.cursor()
-        sql = "SELECT * FROM curso WHERE 'template' = '{0}'".format(codigo)
+        sql = "SELECT * FROM bom WHERE template = '{0}'".format(template)
         cursor.execute(sql)
         datos = cursor.fetchall()
         cursos = []
         if datos != None:
+            print('if: {0}'.format(template))
             for fila in datos:
+                print('for: {0}'.format(template))
                 curso = {
-                        'Network Layer': fila[0],
-                        'Vendor': fila[1],
-                        'Template': fila[2],
-                        'Vendor Part': fila[3],
-                        'Item Master': fila[4],
-                        'SAP Number': fila[5],
-                        'Description': fila[6],
-                        'Comment': fila[7],
-                        'Count': fila[8],
-                        'Price': fila[9]
+                        'id': fila[0],
+                        'network_layer': fila[1],
+                        'vendor': fila[2],
+                        'template': fila[3],
+                        'vendor_part': fila[4],
+                        'item_master': fila[5],
+                        'sap_number': fila[6],
+                        'description': fila[7],
+                        'comment': fila[8],
+                        'count': fila[9],
+                        'price': fila[10]
                         }
                 cursos.append(curso)
             return jsonify({'BOM': cursos, 'mensaje': "Cursos listados.", 'exito': True})
         else:
             return None
     except Exception as ex:
+        print('valor: {0}'.format(template))
         raise ex
 
 
-@app.route('/cursos/<codigo>', methods=['GET'])
-def leer_curso(codigo):
+@app.route('/cursos/<template>', methods=['GET'])
+def leer_curso(template):
+    #print(template)
     try:
-        curso = leer_curso_bd(codigo)
-        if curso != None:
-            return jsonify({'curso': curso, 'mensaje': "Curso encontrado.", 'exito': True})
+        #cursos = leer_curso_bd(template)
+        
+        cursor = conexion.connection.cursor()
+        sql = "SELECT * FROM bom WHERE template = '{0}'".format(template)
+        cursor.execute(sql)
+        datos = cursor.fetchall()
+        cursos = []
+        if datos != None:
+            
+            for fila in datos:
+                i=+1
+                curso = {
+                        'id': fila[0],
+                        'network_layer': fila[1],
+                        'vendor': fila[2],
+                        'template': fila[3],
+                        'vendor_part': fila[4],
+                        'item_master': fila[5],
+                        'sap_number': fila[6],
+                        'description': fila[7],
+                        'comment': fila[8],
+                        'count': fila[9],
+                        'price': fila[10]
+                        }
+                cursos.append(curso)
+        
+        if cursos != None:
+            return jsonify({'BOM': cursos, 'mensaje': " Se encontraron los componentes", 'exito': True})
         else:
             return jsonify({'mensaje': "Curso no encontrado.", 'exito': False})
     except Exception as ex:
